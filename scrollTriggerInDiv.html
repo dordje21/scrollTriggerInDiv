@@ -1,0 +1,98 @@
+<style>
+.wrap {
+  height: 800px;
+  width: 500px;
+  padding: 0 40px;
+  border: 1px solid #000;
+  overflow-y: scroll;
+  display: inline-block;
+}
+
+.target {
+  color: yellow;
+}
+
+.isHeadingFix{
+    color: red;
+}
+</style>
+
+<div class="wrap">
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1 class='target'>Target1</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1 class='target'>Target2</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1 class='target'>Target3</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+<h1>hello</h1>
+</div>
+
+<script type="text/javascript">
+
+function reactor(func, wait) {
+    let timer = null;
+    return function(...args) {
+        if (timer === null) { 
+          timer = setTimeout(() => {
+            func.apply(this, args);
+            timer = null;
+          }, wait);
+        }
+    };
+}
+
+const wrap = document.querySelector('.wrap');
+const target = document.querySelectorAll('.target');
+const checkOffset = () => {
+    const wrapOffset = wrap.scrollTop + wrap.offsetTop;
+    
+    target.forEach(e => {
+        const targetOffset = e.offsetTop;
+      if (wrapOffset >= targetOffset) {
+           e.classList.add('isHeadingFix')
+      } else if (wrapOffset <= targetOffset) {
+            e.classList.remove('isHeadingFix')
+      }
+    })
+}
+
+    const ScrollMe = reactor(checkOffset, 100);
+    wrap.addEventListener('scroll', ScrollMe);
+
+</script>
